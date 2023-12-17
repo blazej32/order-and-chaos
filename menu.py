@@ -66,7 +66,7 @@ class Menu():
                                  (50, 250), self.colors['gray'])
         level_info.draw(screen)
 
-        easy_expl_msg = 'poziom łatwy: komuter wykonuje losowe ruchy'
+        easy_expl_msg = 'poziom łatwy: komputer wykonuje losowe ruchy'
         easy_expl = TextSurface(easy_expl_msg, montserrat_font(20),
                                 (50, 350), self.colors['gray'])
         easy_expl.draw(screen)
@@ -136,7 +136,8 @@ class Menu():
                 self.choosen_site = 'chaos'
                 chaos_active_info = TextSurface('CHAOS',
                                                 montserrat_font(30),
-                                                (320, 150), self.colors['blue'])
+                                                (320, 150),
+                                                self.colors['blue'])
                 chaos_active_info.draw(screen)
             if self.easy_button.isclicked():
                 self.choosen_level = 'easy'
