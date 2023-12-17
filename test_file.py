@@ -2,4 +2,5 @@ import pygame
 pygame.init()
 pygame.font.init()
 
-pygame.font.get_fonts()
+for i in range(6):
+    print(i)
