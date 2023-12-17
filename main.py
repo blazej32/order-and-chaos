@@ -22,7 +22,7 @@ while run:
             run = False
     pygame.display.update()
 
-    if game_menu.starter():
+    if game_menu.starter(screen):
         game_board = Board(colors, game_menu.choosen_site,
                            game_menu.choosen_level)
         game_board.draw(screen)

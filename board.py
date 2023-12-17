@@ -4,6 +4,8 @@ import pygame
 class Board():
     def __init__(self, colors, site, level):
         self.colors = colors
+        self.site = site
+        self.level = level
 
     def draw(self, screen):
         white = self.colors['white']

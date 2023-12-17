@@ -51,70 +51,105 @@ class Menu():
         self.choosen_site = None
 
     def draw(self, screen):
-        white = self.colors['white']
-        gray = self.colors['gray']
-        blue = self.colors['blue']
-        red = self.colors['red']
-
         screen.fill(self.colors['white'])
 
-        welcome_msg = TextSurface('PORZĄDEK I CHAOS', montserrat_font(40),
-                                  (50, 50), blue)
+        welcome_msg = TextSurface('PORZĄDEK I CHAOS', montserrat_font(50),
+                                  (50, 50), self.colors['blue'])
         welcome_msg.draw(screen)
 
-        welcome_msg = TextSurface('Błażej Klepacki', montserrat_font(25),
-                                  (50, 620), red)
-        welcome_msg.draw(screen)
+        site_info = TextSurface('wybrana strona:', montserrat_font(30),
+                                (50, 150), self.colors['gray'])
+        site_info.draw(screen)
+
+        level_info = TextSurface('wybrana poziom:', montserrat_font(30),
+                                 (50, 250), self.colors['gray'])
+        level_info.draw(screen)
+
+        easy_expl_msg = 'poziom łatwy: komputer wykonuje losowe ruchy'
+        easy_expl = TextSurface(easy_expl_msg, montserrat_font(20),
+                                (50, 350), self.colors['gray'])
+        easy_expl.draw(screen)
+
+        hard_expl_msg = 'poziom trudny: komputer gra najlepiej jak umie'
+        hard_expl = TextSurface(hard_expl_msg, montserrat_font(20),
+                                (50, 380), self.colors['gray'])
+        hard_expl.draw(screen)
+
+        signature = TextSurface('Błażej Klepacki', montserrat_font(25),
+                                (50, 620), self.colors['gray'])
+        signature.draw(screen)
 
         site_choice_msg = TextSurface('WYBIERZ STRONĘ', montserrat_font(40),
-                                      (730, 50), gray)
+                                      (730, 50), self.colors['gray'])
         site_choice_msg.draw(screen)
 
         site_choice_com_msg = TextSurface('(porządek rozpoczyna grę)',
-                                          montserrat_font(30), (715, 90), gray)
+                                          montserrat_font(30), (715, 90),
+                                          self.colors['gray'])
         site_choice_com_msg.draw(screen)
 
         level_choice_msg = TextSurface('POZIOM TRUDNOŚCI', montserrat_font(40),
-                                       (710, 285), gray)
+                                       (710, 285), self.colors['gray'])
         level_choice_msg.draw(screen)
 
         self.order_button.draw(screen)
         order_button_text = TextSurface('PORZĄDEK', montserrat_font(20),
-                                        (753, 185), white)
+                                        (753, 185), self.colors['white'])
         order_button_text.draw(screen)
 
         self.chaos_button.draw(screen)
         chaos_but_msg = TextSurface('CHAOS', montserrat_font(20), (995, 185),
-                                    white)
+                                    self.colors['white'])
         chaos_but_msg.draw(screen)
 
         self.easy_button.draw(screen)
         easy_but_msg = TextSurface('ŁATWY', montserrat_font(20), (775, 385),
-                                   white)
+                                   self.colors['white'])
         easy_but_msg.draw(screen)
 
         self.hard_button.draw(screen)
         hard_but_msg = TextSurface('TRUDNY', montserrat_font(20), (990, 385),
-                                   white)
+                                   self.colors['white'])
         hard_but_msg.draw(screen)
 
         self.play_button.draw(screen)
         play_but_msg = TextSurface('GRAJ', montserrat_font(30), (880, 580),
-                                   white)
+                                   self.colors['white'])
         play_but_msg.draw(screen)
 
-    def starter(self):
+    def starter(self, screen):
+        white = self.colors['white']
         ready_to_play = False
         if self.play_button.isclicked():
             ready_to_play = True
         if self.order_button.isclicked():
             self.choosen_site = 'order'
+            pygame.draw.rect(screen, white, (320, 150, 200, 100))
+            order_active_info = TextSurface('PORZĄDEK',
+                                            montserrat_font(30), (320, 150),
+                                            self.colors['red'])
+            order_active_info.draw(screen)
         if self.chaos_button.isclicked():
+            pygame.draw.rect(screen, white, (320, 150, 200, 100))
             self.choosen_site = 'chaos'
+            chaos_active_info = TextSurface('CHAOS',
+                                            montserrat_font(30), (320, 150),
+                                            self.colors['blue'])
+            chaos_active_info.draw(screen)
         if self.easy_button.isclicked():
             self.choosen_level = 'easy'
+            pygame.draw.rect(screen, white, (340, 250, 200, 50))
+            easy_active_info = TextSurface('ŁATWY',
+                                           montserrat_font(30), (340, 250),
+                                           self.colors['red'])
+            easy_active_info.draw(screen)
         if self.hard_button.isclicked():
             self.choosen_level = 'hard'
+            pygame.draw.rect(screen, white, (330, 250, 200, 50))
+            hard_active_info = TextSurface('TRUDNY',
+                                           montserrat_font(30), (340, 250),
+                                           self.colors['blue'])
+            hard_active_info.draw(screen)
         if self.choosen_level and self.choosen_site and ready_to_play:
             return True
         return False
