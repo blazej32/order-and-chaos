@@ -4,6 +4,9 @@ pygame.font.init()
 
 # set up constants
 screen_size = (1200, 700)
+fonts = {40: pygame.font.Font('montserrat.ttf', 40),
+         30: pygame.font.Font('montserrat.ttf', 30),
+         20: pygame.font.Font('montserrat.ttf', 20)}
 colors = {'white': (249, 245, 235),
           'blue': (0, 43, 91),
           'red': (234, 84, 85),
@@ -28,10 +31,10 @@ for line in range(7):
 
 # draw text and buttons
 class TextSurface:
-    def __init__(self, msg, font, location):
+    def __init__(self, msg, font, location, color=colors['gray']):
         self.msg = msg
         self.font = font
-        self.color = colors['gray']
+        self.color = color
         self.location = location
 
     def draw(self):
@@ -39,20 +42,28 @@ class TextSurface:
         screen.blit(surf, self.location)
 
 
-site_choice_font = pygame.font.Font('montserrat.ttf', 40)
-site_choice = TextSurface('WYBIERZ STRONĘ', site_choice_font, (730, 50))
+site_choice = TextSurface('WYBIERZ STRONĘ', fonts[40], (730, 50))
 site_choice.draw()
 
-stch_com_font = pygame.font.Font('montserrat.ttf', 30)
-stch_com = TextSurface('(porządek rozpoczyna grę)', stch_com_font, (715, 90))
+stch_com = TextSurface('(porządek rozpoczyna grę)', fonts[30], (715, 90))
 stch_com.draw()
 
-pygame.draw.rect(screen, colors['red'], (715, 150, 200, 100))
+pygame.draw.rect(screen, colors['blue'], (715, 150, 200, 100))
 pygame.draw.rect(screen, colors['blue'], (935, 150, 200, 100))
 
-level_choice_font = pygame.font.Font('montserrat.ttf', 40)
-level_choice = TextSurface('POZIOM TRUDNOŚCI', level_choice_font, (750, 350))
+order_but = TextSurface('PORZĄDEK', fonts[20], (753, 185), colors['white'])
+order_but.draw()
+
+chaos_but = TextSurface('CHAOS', fonts[20], (995, 185), colors['white'])
+chaos_but.draw()
+
+level_choice = TextSurface('POZIOM TRUDNOŚCI', fonts[40], (710, 300))
 level_choice.draw()
+
+pygame.draw.rect(screen, colors['red'], (715, 370, 200, 100))
+pygame.draw.rect(screen, colors['red'], (935, 370, 200, 100))
+
+
 
 # game loop
 run = True
