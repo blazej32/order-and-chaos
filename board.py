@@ -2,11 +2,12 @@ import pygame
 
 
 class Board():
-    def __init__(self, fonts, colors, site, level):
-        self.fonts = fonts
+    def __init__(self, colors, site, level):
         self.colors = colors
 
     def draw(self, screen):
+        white = self.colors['white']
+        pygame.draw.rect(screen, white, (50, 50, 600, 600))
         for line in range(7):
             height = line * 100 + 50
             start_coords = (50, height)

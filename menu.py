@@ -1,3 +1,4 @@
+from constants import montserrat_font
 import pygame
 pygame.init()
 pygame.font.init()
@@ -6,8 +7,8 @@ pygame.font.init()
 class TextSurface:
     def __init__(self, msg, font, location, color):
         self.msg = msg
-        self.font = font
         self.color = color
+        self.font = font
         self.location = location
 
     def draw(self, screen):
@@ -39,11 +40,10 @@ class Button():
 
 
 class Menu():
-    def __init__(self, fonts, colors):
-        self.fonts = fonts
+    def __init__(self, colors):
         self.colors = colors
         self.order_button = Button((715, 150), (200, 100), self.colors['blue'])
-        self.chaos_button = Button((925, 150), (200, 100), self.colors['blue'])
+        self.chaos_button = Button((935, 150), (200, 100), self.colors['blue'])
         self.easy_button = Button((715, 350), (200, 100), self.colors['red'])
         self.hard_button = Button((935, 350), (200, 100), self.colors['red'])
         self.play_button = Button((715, 550), (420, 100), self.colors['gray'])
@@ -53,40 +53,54 @@ class Menu():
     def draw(self, screen):
         white = self.colors['white']
         gray = self.colors['gray']
+        blue = self.colors['blue']
+        red = self.colors['red']
 
         screen.fill(self.colors['white'])
 
-        site_choice_msg = TextSurface('WYBIERZ STRONĘ', self.fonts[40],
-                                      (730, 50), white)
+        welcome_msg = TextSurface('PORZĄDEK I CHAOS', montserrat_font(40),
+                                  (50, 50), blue)
+        welcome_msg.draw(screen)
+
+        welcome_msg = TextSurface('Błażej Klepacki', montserrat_font(25),
+                                  (50, 620), red)
+        welcome_msg.draw(screen)
+
+        site_choice_msg = TextSurface('WYBIERZ STRONĘ', montserrat_font(40),
+                                      (730, 50), gray)
         site_choice_msg.draw(screen)
 
         site_choice_com_msg = TextSurface('(porządek rozpoczyna grę)',
-                                          self.fonts[30], (715, 90), gray)
+                                          montserrat_font(30), (715, 90), gray)
         site_choice_com_msg.draw(screen)
 
-        level_choice_msg = TextSurface('POZIOM TRUDNOŚCI', self.fonts[40],
+        level_choice_msg = TextSurface('POZIOM TRUDNOŚCI', montserrat_font(40),
                                        (710, 285), gray)
         level_choice_msg.draw(screen)
 
         self.order_button.draw(screen)
-        order_button_text = TextSurface('PORZĄDEK', self.fonts[20], (753, 185),
-                                        white)
+        order_button_text = TextSurface('PORZĄDEK', montserrat_font(20),
+                                        (753, 185), white)
         order_button_text.draw(screen)
 
         self.chaos_button.draw(screen)
-        chaos_but_msg = TextSurface('CHAOS', self.fonts[20], (995, 185), white)
+        chaos_but_msg = TextSurface('CHAOS', montserrat_font(20), (995, 185),
+                                    white)
         chaos_but_msg.draw(screen)
 
         self.easy_button.draw(screen)
-        easy_but_msg = TextSurface('ŁATWY', self.fonts[20], (775, 385), white)
+        easy_but_msg = TextSurface('ŁATWY', montserrat_font(20), (775, 385),
+                                   white)
         easy_but_msg.draw(screen)
 
         self.hard_button.draw(screen)
-        hard_but_msg = TextSurface('TRUDNY', self.fonts[20], (990, 385), white)
+        hard_but_msg = TextSurface('TRUDNY', montserrat_font(20), (990, 385),
+                                   white)
         hard_but_msg.draw(screen)
 
         self.play_button.draw(screen)
-        play_but_msg = TextSurface('GRAJ', self.fonts[30], (880, 580), white)
+        play_but_msg = TextSurface('GRAJ', montserrat_font(30), (880, 580),
+                                   white)
         play_but_msg.draw(screen)
 
     def starter(self):

@@ -1,27 +1,16 @@
 from menu import Menu
+from constants import colors, screen_size
 from board import Board
 import pygame
 pygame.init()
 pygame.font.init()
 
-# constants
-fonts = {80: pygame.font.Font('montserrat.ttf', 80),
-         40: pygame.font.Font('montserrat.ttf', 40),
-         30: pygame.font.Font('montserrat.ttf', 30),
-         20: pygame.font.Font('montserrat.ttf', 20)}
-colors = colors = {'white': (249, 245, 235),
-                   'blue': (0, 43, 91),
-                   'red': (234, 84, 85),
-                   'gray': (75, 76, 77)}
-
-
 # create screen
-screen_size = (1200, 700)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption('Porządek i chaos')
 
 # draw menu
-game_menu = Menu(fonts, colors)
+game_menu = Menu(colors)
 game_menu.draw(screen)
 
 
@@ -34,7 +23,7 @@ while run:
     pygame.display.update()
 
     if game_menu.starter():
-        game_board = Board(fonts, colors, game_menu.choosen_site,
+        game_board = Board(colors, game_menu.choosen_site,
                            game_menu.choosen_level)
         game_board.draw(screen)
 
