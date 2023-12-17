@@ -49,6 +49,7 @@ class Menu():
         self.play_button = Button((715, 550), (420, 100), self.colors['gray'])
         self.choosen_level = None
         self.choosen_site = None
+        self.active_screen = True
 
     def draw(self, screen):
         screen.fill(self.colors['white'])
@@ -120,36 +121,37 @@ class Menu():
     def starter(self, screen):
         white = self.colors['white']
         ready_to_play = False
-        if self.play_button.isclicked():
-            ready_to_play = True
-        if self.order_button.isclicked():
-            self.choosen_site = 'order'
-            pygame.draw.rect(screen, white, (320, 150, 200, 100))
-            order_active_info = TextSurface('PORZĄDEK',
-                                            montserrat_font(30), (320, 150),
-                                            self.colors['red'])
-            order_active_info.draw(screen)
-        if self.chaos_button.isclicked():
-            pygame.draw.rect(screen, white, (320, 150, 200, 100))
-            self.choosen_site = 'chaos'
-            chaos_active_info = TextSurface('CHAOS',
-                                            montserrat_font(30), (320, 150),
-                                            self.colors['blue'])
-            chaos_active_info.draw(screen)
-        if self.easy_button.isclicked():
-            self.choosen_level = 'easy'
-            pygame.draw.rect(screen, white, (340, 250, 200, 50))
-            easy_active_info = TextSurface('ŁATWY',
-                                           montserrat_font(30), (340, 250),
-                                           self.colors['red'])
-            easy_active_info.draw(screen)
-        if self.hard_button.isclicked():
-            self.choosen_level = 'hard'
-            pygame.draw.rect(screen, white, (330, 250, 200, 50))
-            hard_active_info = TextSurface('TRUDNY',
-                                           montserrat_font(30), (340, 250),
-                                           self.colors['blue'])
-            hard_active_info.draw(screen)
+        if self.active_screen:
+            if self.play_button.isclicked():
+                ready_to_play = True
+            if self.order_button.isclicked():
+                self.choosen_site = 'order'
+                pygame.draw.rect(screen, white, (320, 150, 200, 100))
+                order_active_info = TextSurface('PORZĄDEK',
+                                                montserrat_font(30),
+                                                (320, 150), self.colors['red'])
+                order_active_info.draw(screen)
+            if self.chaos_button.isclicked():
+                pygame.draw.rect(screen, white, (320, 150, 200, 100))
+                self.choosen_site = 'chaos'
+                chaos_active_info = TextSurface('CHAOS',
+                                                montserrat_font(30),
+                                                (320, 150), self.colors['blue'])
+                chaos_active_info.draw(screen)
+            if self.easy_button.isclicked():
+                self.choosen_level = 'easy'
+                pygame.draw.rect(screen, white, (340, 250, 200, 50))
+                easy_active_info = TextSurface('ŁATWY',
+                                               montserrat_font(30), (340, 250),
+                                               self.colors['red'])
+                easy_active_info.draw(screen)
+            if self.hard_button.isclicked():
+                self.choosen_level = 'hard'
+                pygame.draw.rect(screen, white, (330, 250, 200, 50))
+                hard_active_info = TextSurface('TRUDNY',
+                                               montserrat_font(30), (340, 250),
+                                               self.colors['blue'])
+                hard_active_info.draw(screen)
         if self.choosen_level and self.choosen_site and ready_to_play:
             return True
         return False

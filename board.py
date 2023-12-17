@@ -1,5 +1,5 @@
 import pygame
-from menu import TextSurface
+from menu import TextSurface, Button
 from constants import montserrat_font
 
 
@@ -8,6 +8,10 @@ class Board():
         self.colors = colors
         self.site = site
         self.level = level
+        self.selected_piece = None
+        self.game = [[0 for x in range(6)] for y in range(6)]
+        self.x_button = Button((800, 200), (150, 150), self.colors['red'])
+        self.o_button = Button((800, 400), (150, 150), self.colors['blue'])
 
     def draw(self, screen):
         white = self.colors['white']
@@ -37,3 +41,6 @@ class Board():
             level_info = TextSurface('poziom: trudny', montserrat_font(30),
                                      (750, 100), self.colors['gray'])
             level_info.draw(screen)
+
+        self.x_button.draw(screen)
+        self.o_button.draw(screen)
