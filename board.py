@@ -1,4 +1,6 @@
 import pygame
+from menu import TextSurface
+from constants import montserrat_font
 
 
 class Board():
@@ -9,7 +11,7 @@ class Board():
 
     def draw(self, screen):
         white = self.colors['white']
-        pygame.draw.rect(screen, white, (50, 50, 600, 600))
+        pygame.draw.rect(screen, white, (0, 0, 1200, 700))
         for line in range(7):
             height = line * 100 + 50
             start_coords = (50, height)
@@ -19,3 +21,19 @@ class Board():
             pygame.draw.line(screen, self.colors['gray'],
                              (start_coords[1], start_coords[0]),
                              (end_coords[1], end_coords[0]), 5)
+        if self.site == 'order':
+            site_info = TextSurface('grasz jako porządek', montserrat_font(30),
+                                    (750, 50), self.colors['gray'])
+            site_info.draw(screen)
+        if self.site == 'chaos':
+            site_info = TextSurface('grasz jako chaos', montserrat_font(30),
+                                    (750, 50), self.colors['gray'])
+            site_info.draw(screen)
+        if self.level == 'easy':
+            level_info = TextSurface('poziom: łatwy', montserrat_font(30),
+                                     (750, 100), self.colors['gray'])
+            level_info.draw(screen)
+        if self.level == 'hard':
+            level_info = TextSurface('poziom: trudny', montserrat_font(30),
+                                     (750, 100), self.colors['gray'])
+            level_info.draw(screen)
