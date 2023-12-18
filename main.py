@@ -1,5 +1,5 @@
-from menu import Menu
 from constants import colors, screen_size
+from menu import Menu
 from board import Board
 import pygame
 pygame.init()
@@ -10,8 +10,8 @@ screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption('Porządek i chaos')
 
 # draw menu
-game_menu = Menu(colors)
-game_menu.draw(screen)
+menu = Menu()
+menu.draw(screen)
 
 
 # game loop
@@ -22,11 +22,10 @@ while run:
             run = False
     pygame.display.update()
 
-    if game_menu.starter(screen):
-        game_menu.active_screen = False
-        game_board = Board(colors, game_menu.choosen_site,
-                           game_menu.choosen_level)
-        game_board.draw(screen)
-
+    if menu.starter(screen):
+        menu.before_game = False
+        menu.ingame(screen, menu.choosen_site, menu.choosen_level)
+        board = Board()
+        board.draw(screen)
 
 pygame.quit()

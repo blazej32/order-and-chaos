@@ -1,13 +1,13 @@
-class Player:
+class Enemy:
     def __init__(self):
         pass
 
 
-class EasyPlayer(Player):
+class EasyEnemy(Enemy):
     def __init__(self):
         super().__init__()
 
 
-class HardPlayer(Player):
+class HardEnemy(Enemy):
     def __init__(self):
         super().__init__()
