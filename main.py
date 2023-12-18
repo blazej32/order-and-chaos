@@ -25,7 +25,10 @@ while run:
     if menu.starter(screen):
         menu.before_game = False
         menu.ingame(screen, menu.choosen_site, menu.choosen_level)
-        board = Board()
+        board = Board(menu.choosen_site, menu.choosen_level)
         board.draw(screen)
+
+    if not menu.before_game:
+        board.make_move(screen)
 
 pygame.quit()

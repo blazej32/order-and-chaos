@@ -46,8 +46,6 @@ class Menu():
         self.easy_button = Button((715, 350), (200, 100), colors['red'])
         self.hard_button = Button((935, 350), (200, 100), colors['red'])
         self.play_button = Button((715, 550), (420, 100), colors['gray'])
-        self.x_button = Button((750, 475), (150, 150), colors['red'])
-        self.o_button = Button((950, 475), (150, 150), colors['blue'])
         self.choosen_level = None
         self.choosen_site = None
         self.before_game = True
@@ -178,10 +176,3 @@ class Menu():
             level_info = TextSurface('poziom: trudny', montserrat_font(30),
                                      (750, 100), colors['gray'])
             level_info.draw(screen)
-
-        self.x_button.draw(screen)
-        self.o_button.draw(screen)
-        x_but_msg = TextSurface('X', montserrat_font(130), (775, 472), white)
-        x_but_msg.draw(screen)
-        o_but_msg = TextSurface('O', montserrat_font(130), (970, 470), white)
-        o_but_msg.draw(screen)
