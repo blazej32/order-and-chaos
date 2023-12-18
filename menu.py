@@ -63,7 +63,7 @@ class Menu():
                                 (50, 150), colors['gray'])
         site_info.draw(screen)
 
-        level_info = TextSurface('wybrana poziom:', montserrat_font(30),
+        level_info = TextSurface('wybrany poziom:', montserrat_font(30),
                                  (50, 250), colors['gray'])
         level_info.draw(screen)
 

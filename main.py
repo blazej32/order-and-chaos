@@ -1,4 +1,4 @@
-from constants import colors, screen_size
+from constants import screen_size
 from menu import Menu
 from board import Board
 import pygame

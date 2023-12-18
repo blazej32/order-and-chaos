@@ -1,6 +1,4 @@
 import pygame
-from menu import TextSurface, Button
-from constants import montserrat_font
 from constants import colors
 
 
