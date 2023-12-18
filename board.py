@@ -10,7 +10,7 @@ class Board():
         self.size = (600, 600)
         self.x_button = Button((750, 475), (150, 150), colors['red'])
         self.o_button = Button((950, 475), (150, 150), colors['blue'])
-        self.game = [[0 for x in range(6)] for y in range(6)]
+        self.game = [[0 for _ in range(6)] for _ in range(6)]
         self.selected_piece = None
         self.selected_square = None
         self.site = site
@@ -60,7 +60,7 @@ class Board():
             end_x = start_x + self.size[0]
             end_y = start_y + self.size[1]
             if pos[0] >= start_x and pos[0] <= end_x:
-                if pos[1] >= start_y and pos[1] < end_y:
+                if pos[1] >= start_y and pos[1] <= end_y:
                     row = math.floor((pos[0] - 50) / 100)
                     column = math.floor((pos[1] - 50) / 100)
                     self.selected_square = (row, column)
@@ -70,14 +70,14 @@ class Board():
                 selected_x = self.selected_square[0]
                 selected_y = self.selected_square[1]
                 self.game[selected_x][selected_y] = self.selected_piece
-                piece_text_x = selected_x * 100 + 50
-                piece_text_y = selected_y * 100 + 50
+                piece_text_x = selected_x * 100 + 68
+                piece_text_y = selected_y * 100 + 30
                 if self.selected_piece == 'x':
-                    draw_piece = TextSurface('x', montserrat_font(80),
+                    draw_piece = TextSurface('x', montserrat_font(100),
                                              (piece_text_x, piece_text_y),
                                              colors['red'])
                 elif self.selected_piece == 'o':
-                    draw_piece = TextSurface('o', montserrat_font(80),
+                    draw_piece = TextSurface('o', montserrat_font(100),
                                              (piece_text_x, piece_text_y),
                                              colors['blue'])
                 draw_piece.draw(screen)
