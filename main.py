@@ -8,17 +8,13 @@ pygame.font.init()
 
 
 def main():
-    # create screen
-    clock = pygame.time.Clock()
 
     screen = pygame.display.set_mode((1200, 700))
+    clock = pygame.time.Clock()
     pygame.display.set_caption('Porządek i chaos')
+    menu = Menu(screen)
+    menu.draw()
 
-    # draw menu
-    menu = Menu()
-    menu.draw(screen)
-
-    # game loop
     run = True
     while run:
         clock.tick(60)
@@ -27,12 +23,12 @@ def main():
                 run = False
         pygame.display.update()
 
-        if menu.starter(screen):
+        if menu.starter():
             menu.before_game = False
-            menu.ingame(screen, menu.choosen_site, menu.choosen_level)
-            board = Board()
-            board.draw_board(screen)
-            game = Game(menu.choosen_site, menu.choosen_level, board)
+            menu.ingame(menu.choosen_site, menu.choosen_level)
+            board = Board(screen)
+            board.draw_board()
+            game = Game(menu.choosen_site, menu.choosen_level, board, screen)
             if game.site == 'chaos':
                 enemy_site = 'order'
             elif game.site == 'order':
@@ -44,9 +40,9 @@ def main():
 
         if not menu.before_game:
             if game.player_turn:
-                game.make_move(screen)
+                game.make_move()
             else:
-                enemy.make_move(board, game, screen)
+                enemy.make_move(board, game)
 
     pygame.quit()
 

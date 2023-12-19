@@ -1,12 +1,12 @@
-from menu import TextSurface
-from board import Board
 from constants import GRAY
+from menu import TextSurface
+import board
 import pygame
 import math
 
 
 class Game:
-    def __init__(self, site, level, board: Board):
+    def __init__(self, site, level, board: board.Board, screen):
         self.game_status = [[0 for _ in range(6)] for _ in range(6)]
         self.site = site
         if self.site == 'order':
@@ -17,17 +17,17 @@ class Game:
         self.selected_piece = None
         self.selected_square = None
         self.board = board
+        self.screen = screen
 
     def move_consequences(self):
         pass
 
-    def move_validation(self, screen):
+    def move_validation(self):
         x = self.selected_square[0]
         y = self.selected_square[1]
         if self.game_status[x][y] != 0:
-            error_msg = TextSurface('square already taken', 30, (750, 150),
-                                    GRAY)
-            error_msg.draw(screen)
+            error_m = TextSurface('square already taken', 30, (750, 150), GRAY)
+            error_m.draw(self.screen)
             self.selected_piece = None
             self.selected_square = None
             return False
@@ -41,7 +41,7 @@ class Game:
         else:
             self.player_turn = True
 
-    def make_move(self, screen):
+    def make_move(self):
         if self.board.x_button.isclicked():
             self.selected_piece = 'x'
         if self.board.o_button.isclicked():
@@ -60,11 +60,10 @@ class Game:
                     self.selected_square = (row, column)
 
         if self.selected_piece and self.selected_square:
-            if self.move_validation(screen):
+            if self.move_validation():
                 selected_x = self.selected_square[0]
                 selected_y = self.selected_square[1]
                 self.game_status[selected_x][selected_y] = self.selected_piece
-                self.board.draw_move(self.selected_piece, self.selected_square,
-                                     screen)
+                self.board.draw_move(self.selected_piece, self.selected_square)
                 self.reset()
                 return True

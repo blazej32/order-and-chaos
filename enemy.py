@@ -13,7 +13,7 @@ class EasyEnemy(Enemy):
     def __init__(self, site):
         super().__init__(site)
 
-    def make_move(self, board: Board, game: Game, screen):
+    def make_move(self, board: Board, game: Game):
         pygame.time.wait(1000)
         selected_piece = random.choice(('x', 'o'))
         selected_square = None
@@ -23,7 +23,7 @@ class EasyEnemy(Enemy):
             if game.game_status[x][y] == 0:
                 selected_square = (x, y)
         game.game_status[x][y] = selected_piece
-        board.draw_move(selected_piece, selected_square, screen)
+        board.draw_move(selected_piece, selected_square)
         game.reset()
 
 
