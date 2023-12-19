@@ -22,9 +22,11 @@ class Game:
     def endgame(self, winner):
         pygame.draw.rect(self.screen, white, (700, 0, 1200, 700))
         if self.site == winner:
-            write_text('you won! :D', 100, (700, 100), gray, self.screen)
+            winning_msg = 'Wygrana! Gratulacje :)'
+            write_text(winning_msg, 60, (700, 300), gray, self.screen)
         else:
-            write_text('you lost! :(', 100, (700, 100), gray, self.screen)
+            losing_msg = 'Przegrana :('
+            write_text(losing_msg, 60, (700, 300), gray, self.screen)
 
     def check_endgame(self):
         gm = self.game_status
@@ -43,11 +45,9 @@ class Game:
             column = [row[index] for row in gm]
             if column.count('x') == 5 and not (column[0] == column[5] == 'x'):
                 self.endgame('order')
-                write_text('vertically, x', 100, (700, 250), gray, self.screen)
                 return True  # order won
             if column.count('o') == 5 and not (column[0] == column[5] == 'o'):
                 self.endgame('order')
-                write_text('vertically, o', 100, (700, 250), gray, self.screen)
                 return True  # order won
 
         # check if order won diagonally
