@@ -37,7 +37,10 @@ class Game:
     def reset(self):
         self.selected_piece = None
         self.selected_square = None
-        self.player_turn = False
+        if self.player_turn is True:
+            self.player_turn = False
+        else:
+            self.player_turn = True
 
     def make_move(self, screen):
         if self.board.x_button.isclicked():

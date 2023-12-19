@@ -22,6 +22,7 @@ class EasyEnemy(Enemy):
                 selected_square = (x, y)
         game.game_status[x][y] = selected_piece
         board.draw_move(selected_piece, selected_square, screen)
+        self.game.reset()
 
 
 class HardEnemy(Enemy):
