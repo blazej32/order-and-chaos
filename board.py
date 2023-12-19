@@ -1,5 +1,5 @@
 import pygame
-from constants import colors, montserrat_font
+from constants import colors
 from menu import TextSurface, Button
 
 
@@ -22,22 +22,20 @@ class Board():
                              (end_coords[1], end_coords[0]), 5)
         self.x_button.draw(screen)
         self.o_button.draw(screen)
-        x_but_msg = TextSurface('X', montserrat_font(130), (775, 472),
-                                colors['white'])
+        x_but_msg = TextSurface('X', 130, (775, 472), colors['white'])
         x_but_msg.draw(screen)
-        o_but_msg = TextSurface('O', montserrat_font(130), (970, 470),
-                                colors['white'])
+        o_but_msg = TextSurface('O', 130, (970, 470), colors['white'])
         o_but_msg.draw(screen)
 
     def draw_move(self, piece, square, screen):
         piece_text_x = square[0] * 100 + 67
         piece_text_y = square[1] * 100 + 31
         if piece == 'x':
-            draw_piece = TextSurface('x', montserrat_font(100),
+            draw_piece = TextSurface('x', 100,
                                      (piece_text_x, piece_text_y),
                                      colors['red'])
         elif piece == 'o':
-            draw_piece = TextSurface('o', montserrat_font(100),
+            draw_piece = TextSurface('o', 100,
                                      (piece_text_x, piece_text_y),
                                      colors['blue'])
         draw_piece.draw(screen)
