@@ -32,7 +32,11 @@ def main():
             board.draw(screen)
 
         if not menu.before_game:
-            board.make_move(screen)
+            if board.player_turn:
+                board.make_move(screen)
+            else:
+                pass
+                # enemy makes move
 
     pygame.quit()
 

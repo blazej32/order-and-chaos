@@ -39,8 +39,15 @@ class Board():
                                 colors['white'])
         o_but_msg.draw(screen)
 
-    def move_validation(self):
-        if not self.player_turn:
+    def move_consequences(self):
+        pass
+
+    def move_validation(self, screen):
+        if self.game[self.selected_square[0]][self.selected_square[1]] != 0:
+            error_msg = TextSurface('square already taken',
+                                    montserrat_font(30), (750, 150),
+                                    colors['gray'])
+            error_msg.draw(screen)
             self.selected_piece = None
             self.selected_square = None
             return False
@@ -49,7 +56,20 @@ class Board():
     def reset(self):
         self.selected_piece = None
         self.selected_square = None
-        self.player_turn = False
+        # self.player_turn = False
+
+    def draw_move(self, piece, square, screen):
+        piece_text_x = square[0] * 100 + 67
+        piece_text_y = square[1] * 100 + 31
+        if piece == 'x':
+            draw_piece = TextSurface('x', montserrat_font(100),
+                                     (piece_text_x, piece_text_y),
+                                     colors['red'])
+        elif piece == 'o':
+            draw_piece = TextSurface('o', montserrat_font(100),
+                                     (piece_text_x, piece_text_y),
+                                     colors['blue'])
+        draw_piece.draw(screen)
 
     def make_move(self, screen):
         if self.x_button.isclicked():
@@ -70,19 +90,10 @@ class Board():
                     self.selected_square = (row, column)
 
         if self.selected_piece and self.selected_square:
-            if self.move_validation():
+            if self.move_validation(screen):
                 selected_x = self.selected_square[0]
                 selected_y = self.selected_square[1]
                 self.game[selected_x][selected_y] = self.selected_piece
-                piece_text_x = selected_x * 100 + 67
-                piece_text_y = selected_y * 100 + 31
-                if self.selected_piece == 'x':
-                    draw_piece = TextSurface('x', montserrat_font(100),
-                                             (piece_text_x, piece_text_y),
-                                             colors['red'])
-                elif self.selected_piece == 'o':
-                    draw_piece = TextSurface('o', montserrat_font(100),
-                                             (piece_text_x, piece_text_y),
-                                             colors['blue'])
-                draw_piece.draw(screen)
+                self.draw_move(self.selected_piece, (selected_x, selected_y),
+                               screen)
                 self.reset()
