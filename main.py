@@ -30,8 +30,6 @@ def main():
             menu.ingame(screen, menu.choosen_site, menu.choosen_level)
             board = Board(menu.choosen_site, menu.choosen_level)
             board.draw(screen)
-            if board.selected_piece:
-                board.selected_piece = None
 
         if not menu.before_game:
             board.make_move(screen)

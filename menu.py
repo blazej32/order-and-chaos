@@ -45,7 +45,7 @@ class Menu():
         self.chaos_button = Button((935, 150), (200, 100), colors['blue'])
         self.easy_button = Button((715, 350), (200, 100), colors['red'])
         self.hard_button = Button((935, 350), (200, 100), colors['red'])
-        self.play_button = Button((715, 550), (420, 100), colors['gray'])
+        self.play_button = Button((50, 450), (420, 100), colors['gray'])
         self.choosen_level = None
         self.choosen_site = None
         self.before_game = True
@@ -113,7 +113,7 @@ class Menu():
         hard_but_msg.draw(screen)
 
         self.play_button.draw(screen)
-        play_but_msg = TextSurface('GRAJ', montserrat_font(30), (880, 580),
+        play_but_msg = TextSurface('GRAJ', montserrat_font(30), (200, 480),
                                    colors['white'])
         play_but_msg.draw(screen)
 

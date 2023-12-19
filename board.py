@@ -40,12 +40,16 @@ class Board():
         o_but_msg.draw(screen)
 
     def move_validation(self):
+        if not self.player_turn:
+            self.selected_piece = None
+            self.selected_square = None
+            return False
         return True
 
     def reset(self):
         self.selected_piece = None
         self.selected_square = None
-        # self.player_turn = False
+        self.player_turn = False
 
     def make_move(self, screen):
         if self.x_button.isclicked():
@@ -70,8 +74,8 @@ class Board():
                 selected_x = self.selected_square[0]
                 selected_y = self.selected_square[1]
                 self.game[selected_x][selected_y] = self.selected_piece
-                piece_text_x = selected_x * 100 + 68
-                piece_text_y = selected_y * 100 + 30
+                piece_text_x = selected_x * 100 + 67
+                piece_text_y = selected_y * 100 + 31
                 if self.selected_piece == 'x':
                     draw_piece = TextSurface('x', montserrat_font(100),
                                              (piece_text_x, piece_text_y),
