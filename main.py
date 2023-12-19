@@ -1,4 +1,3 @@
-from constants import screen_size
 from menu import Menu
 from board import Board
 from enemy import EasyEnemy, HardEnemy
@@ -11,7 +10,8 @@ pygame.font.init()
 def main():
     # create screen
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode(screen_size)
+
+    screen = pygame.display.set_mode((1200, 700))
     pygame.display.set_caption('Porządek i chaos')
 
     # draw menu

@@ -1,6 +1,6 @@
 from menu import TextSurface
 from board import Board
-from constants import colors
+from constants import GRAY
 import pygame
 import math
 
@@ -26,7 +26,7 @@ class Game:
         y = self.selected_square[1]
         if self.game_status[x][y] != 0:
             error_msg = TextSurface('square already taken', 30, (750, 150),
-                                    colors['gray'])
+                                    GRAY)
             error_msg.draw(screen)
             self.selected_piece = None
             self.selected_square = None
