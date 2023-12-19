@@ -1,4 +1,5 @@
 import random
+import pygame
 from board import Board
 from game import Game
 
@@ -13,6 +14,7 @@ class EasyEnemy(Enemy):
         super().__init__(site)
 
     def make_move(self, board: Board, game: Game, screen):
+        pygame.time.wait(1000)
         selected_piece = random.choice(('x', 'o'))
         selected_square = None
         while not selected_square:
@@ -22,7 +24,7 @@ class EasyEnemy(Enemy):
                 selected_square = (x, y)
         game.game_status[x][y] = selected_piece
         board.draw_move(selected_piece, selected_square, screen)
-        self.game.reset()
+        game.reset()
 
 
 class HardEnemy(Enemy):
