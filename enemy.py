@@ -1,5 +1,6 @@
 import random
 from board import Board
+from game import Game
 
 
 class Enemy:
@@ -8,23 +9,24 @@ class Enemy:
 
 
 class EasyEnemy(Enemy):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, site):
+        super().__init__(site)
 
-    def make_move(self, board: Board):
+    def make_move(self, board: Board, game: Game, screen):
         selected_piece = random.choice(('x', 'o'))
         selected_square = None
         while not selected_square:
             x = random.randint(0, 5)
             y = random.randint(0, 5)
-            if board.game[x][y] == 0:
+            if game.game_status[x][y] == 0:
                 selected_square = (x, y)
-        board.game[x][y] = selected_piece
+        game.game_status[x][y] = selected_piece
+        board.draw_move(selected_piece, selected_square, screen)
 
 
 class HardEnemy(Enemy):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, site):
+        super().__init__(site)
 
-    def make_move(self, game):
+    def make_move(self, board: Board, game):
         pass

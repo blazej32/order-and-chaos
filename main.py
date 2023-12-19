@@ -1,6 +1,8 @@
 from constants import screen_size
 from menu import Menu
 from board import Board
+from enemy import EasyEnemy, HardEnemy
+from game import Game
 import pygame
 pygame.init()
 pygame.font.init()
@@ -28,15 +30,23 @@ def main():
         if menu.starter(screen):
             menu.before_game = False
             menu.ingame(screen, menu.choosen_site, menu.choosen_level)
-            board = Board(menu.choosen_site, menu.choosen_level)
-            board.draw(screen)
+            board = Board()
+            board.draw_board(screen)
+            game = Game(menu.choosen_site, menu.choosen_level, board)
+            if game.site == 'chaos':
+                enemy_site = 'order'
+            elif game.site == 'order':
+                enemy_site = 'chaos'
+            if game.level == 'easy':
+                enemy = EasyEnemy(enemy_site)
+            elif game.level == 'hard':
+                enemy = HardEnemy(enemy_site)
 
         if not menu.before_game:
-            if board.player_turn:
-                board.make_move(screen)
+            if game.player_turn:
+                game.make_move(screen)
             else:
-                pass
-                # enemy makes move
+                enemy.make_move(board, game, screen)
 
     pygame.quit()
 
