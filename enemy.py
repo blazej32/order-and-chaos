@@ -14,7 +14,7 @@ class EasyEnemy(Enemy):
         super().__init__(site)
 
     def make_move(self, board: Board, game: Game):
-        pygame.time.wait(1000)
+        pygame.time.wait(500)
         selected_piece = random.choice(('x', 'o'))
         selected_square = None
         while not selected_square:

@@ -42,7 +42,6 @@ def main():
                 game.make_move()
             else:
                 enemy.make_move(board, game)
-
     pygame.quit()
 
 

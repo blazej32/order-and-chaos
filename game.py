@@ -1,12 +1,12 @@
-from colors import gray
+from colors import white, gray
 from menu import write_text
-import board
+from board import Board
 import pygame
 import math
 
 
 class Game:
-    def __init__(self, site, level, board: board.Board, screen):
+    def __init__(self, site, level, board: Board, screen):
         self.game_status = [[0 for _ in range(6)] for _ in range(6)]
         self.site = site
         if self.site == 'order':
@@ -19,14 +19,71 @@ class Game:
         self.board = board
         self.screen = screen
 
-    def move_consequences(self):
-        pass
+    def endgame(self, winner):
+        pygame.draw.rect(self.screen, white, (700, 0, 1200, 700))
+        if self.site == winner:
+            write_text('you won! :D', 100, (700, 100), gray, self.screen)
+        else:
+            write_text('you lost! :(', 100, (700, 100), gray, self.screen)
+
+    def check_endgame(self):
+        gm = self.game_status
+
+        # check if order won horizontally
+        for row in gm:
+            if row.count('x') == 5 and not (row[0] == row[5] == 'x'):
+                self.endgame('order')
+                return True  # order won
+            if row.count('o') == 5 and not (row[0] == row[5] == 'o'):
+                self.endgame('order')
+                return True  # order won
+
+        # check if order won vertically
+        for index in range(6):
+            column = [row[index] for row in gm]
+            if column.count('x') == 5 and not (column[0] == column[5] == 'x'):
+                self.endgame('order')
+                write_text('vertically, x', 100, (700, 250), gray, self.screen)
+                return True  # order won
+            if column.count('o') == 5 and not (column[0] == column[5] == 'o'):
+                self.endgame('order')
+                write_text('vertically, o', 100, (700, 250), gray, self.screen)
+                return True  # order won
+
+        # check if order won diagonally
+        diagonal_win_combinations = [[[0, 4], [1, 3], [2, 2], [3, 1], [4, 0]],
+                                     [[0, 5], [1, 4], [2, 3], [3, 2], [4, 1]],
+                                     [[1, 4], [2, 3], [3, 2], [4, 1], [5, 0]],
+                                     [[1, 5], [2, 4], [3, 3], [4, 3], [5, 1]],
+                                     [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4]],
+                                     [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]],
+                                     [[1, 0], [2, 1], [3, 2], [4, 3], [5, 4]],
+                                     [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]]]
+        for comb in diagonal_win_combinations:
+            if all(gm[x[0]][x[1]] == gm[comb[0][0]][comb[0][1]] for x in comb):
+                zero_occurences = 0
+                for square in comb:
+                    if gm[square[0]][square[1]] == 0:
+                        zero_occurences += 1
+                if not zero_occurences:
+                    self.endgame('order')
+                    return True  # order won
+
+        # check if chaos won
+        zero_occurences = 0
+        for row in gm:
+            zero_occurences += row.count(0)
+
+        if not zero_occurences:
+            self.endgame('chaos')
+            return True  # chaos won
+
+        return False
 
     def move_validation(self):
         x = self.selected_square[0]
         y = self.selected_square[1]
-        if self.game_status[x][y] != 0:
-            write_text('zajęte pole', 30, (750, 150), gray, self.screen)
+        if not self.game_status[x][y] == 0:
             self.selected_square = None
             return False
         return True
@@ -63,5 +120,5 @@ class Game:
                 selected_y = self.selected_square[1]
                 self.game_status[selected_x][selected_y] = self.selected_piece
                 self.board.draw_move(self.selected_piece, self.selected_square)
-                self.reset()
-                return True
+                if not self.check_endgame():
+                    self.reset()

@@ -10,21 +10,21 @@ def write_text(msg, size, location, color, screen):
 
 class Button():
     def __init__(self, coords, size, color):
-        self.coordinates = coords
+        self.coords = coords
         self.size = size
         self.color = color
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, (self.coordinates[0],
-                         self.coordinates[1], self.size[0], self.size[1]))
+        pygame.draw.rect(screen, self.color, (self.coords[0], self.coords[1],
+                                              self.size[0], self.size[1]))
 
     def isclicked(self):
         if pygame.mouse.get_pressed()[0] == 1:
             pos = pygame.mouse.get_pos()
-            start_x = self.coordinates[0]
-            end_x = self.coordinates[0] + self.size[0]
-            start_y = self.coordinates[1]
-            end_y = self.coordinates[1] + self.size[1]
+            start_x = self.coords[0]
+            end_x = self.coords[0] + self.size[0]
+            start_y = self.coords[1]
+            end_y = self.coords[1] + self.size[1]
             if pos[0] >= start_x and pos[0] <= end_x:
                 if pos[1] >= start_y and pos[1] < end_y:
                     return True
