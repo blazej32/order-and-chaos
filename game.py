@@ -18,15 +18,16 @@ class Game:
         self.selected_square = None
         self.board = board
         self.screen = screen
+        self.last_move = None
 
     def endgame(self, winner):
         pygame.draw.rect(self.screen, white, (700, 0, 1200, 700))
         if self.site == winner:
             winning_msg = 'Wygrana! Gratulacje :)'
-            write_text(winning_msg, 60, (700, 300), gray, self.screen)
+            write_text(winning_msg, 40, (700, 300), gray, self.screen)
         else:
             losing_msg = 'Przegrana :('
-            write_text(losing_msg, 60, (700, 300), gray, self.screen)
+            write_text(losing_msg, 40, (700, 300), gray, self.screen)
 
     def check_endgame(self):
         gm = self.game_status
@@ -51,19 +52,20 @@ class Game:
                 return True  # order won
 
         # check if order won diagonally
-        diagonal_win_combinations = [[[0, 4], [1, 3], [2, 2], [3, 1], [4, 0]],
-                                     [[0, 5], [1, 4], [2, 3], [3, 2], [4, 1]],
-                                     [[1, 4], [2, 3], [3, 2], [4, 1], [5, 0]],
-                                     [[1, 5], [2, 4], [3, 3], [4, 3], [5, 1]],
-                                     [[0, 0], [1, 1], [2, 2], [3, 3], [4, 4]],
-                                     [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]],
-                                     [[1, 0], [2, 1], [3, 2], [4, 3], [5, 4]],
-                                     [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]]]
+        diagonal_win_combinations = [['04', '13', '22', '31', '40'],
+                                     ['05', '14', '23', '32', '41'],
+                                     ['14', '23', '32', '41', '50'],
+                                     ['15', '24', '33', '42', '51'],
+                                     ['00', '11', '22', '33', '44'],
+                                     ['01', '12', '23', '34', '45'],
+                                     ['10', '21', '32', '43', '54'],
+                                     ['11', '22', '33', '44', '55']]
         for comb in diagonal_win_combinations:
-            if all(gm[x[0]][x[1]] == gm[comb[0][0]][comb[0][1]] for x in comb):
+            first_square = gm[int(comb[0][0])][int(comb[0][1])]
+            if all(gm[int(x[0])][int(x[1])] == first_square for x in comb):
                 zero_occurences = 0
                 for square in comb:
-                    if gm[square[0]][square[1]] == 0:
+                    if gm[int(square[0])][int(square[1])] == 0:
                         zero_occurences += 1
                 if not zero_occurences:
                     self.endgame('order')
@@ -121,4 +123,8 @@ class Game:
                 self.game_status[selected_x][selected_y] = self.selected_piece
                 self.board.draw_move(self.selected_piece, self.selected_square)
                 if not self.check_endgame():
+                    x = self.selected_square[0]
+                    y = self.selected_square[1]
+                    square_str = str(x) + str(y)
+                    self.last_move = (self.selected_piece, square_str)
                     self.reset()
