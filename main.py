@@ -8,7 +8,6 @@ pygame.font.init()
 
 
 def main():
-
     screen = pygame.display.set_mode((1200, 700))
     clock = pygame.time.Clock()
     pygame.display.set_caption('Porządek i chaos')

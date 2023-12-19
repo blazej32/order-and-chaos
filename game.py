@@ -1,5 +1,5 @@
-from constants import GRAY
-from menu import TextSurface
+from colors import gray
+from menu import write_text
 import board
 import pygame
 import math
@@ -26,9 +26,7 @@ class Game:
         x = self.selected_square[0]
         y = self.selected_square[1]
         if self.game_status[x][y] != 0:
-            error_m = TextSurface('square already taken', 30, (750, 150), GRAY)
-            error_m.draw(self.screen)
-            self.selected_piece = None
+            write_text('zajęte pole', 30, (750, 150), gray, self.screen)
             self.selected_square = None
             return False
         return True
