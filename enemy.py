@@ -1,5 +1,4 @@
 import random
-import pygame
 from board import Board
 from game import Game
 
@@ -51,3 +50,5 @@ class HardEnemy(Enemy):
             game.game_status[square[0]][square[1]] = token
             board.draw_move(token, square)
             game.reset()
+        elif self.site == 'order':
+            pass
