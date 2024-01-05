@@ -138,7 +138,7 @@ class BoostedEnemy(Enemy):
             dg_values = list(dg.values())
             dg_keys = list(dg.keys())
             if dg_values.count('x') == 4 and dg_values.count(0) == 1:
-                str_square = dg_keys[dg_values().index(0)]
+                str_square = dg_keys[dg_values.index(0)]
                 square = (int(str_square[0]), int(str_square[1]))
                 return (square, 'o')
             if dg_values.count('o') == 4 and dg_values.count(0) == 1:
