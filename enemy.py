@@ -42,11 +42,11 @@ class BoostedEnemy(Enemy):
         if self.site == 'chaos':
             enemy_square = self.game.last_move[1]
             enemy_token = self.game.last_move[0]
-            # check diagonals (3 cases)
-            diagonal_00_55 = [gs[0][0], gs[1][1], gs[2][2], gs[3][3],
-                              gs[4][4], gs[5][5]]
-            diagonal_05_50 = [gs[0][5], gs[1][4], gs[2][3], gs[3][2],
-                              gs[4][1], gs[5][0]]
+            # check main diagonals (3 cases)
+            diagonal_00_55 = [gs[0][0], gs[1][1], gs[2][2], gs[3][3], gs[4][4],
+                              gs[5][5]]
+            diagonal_05_50 = [gs[0][5], gs[1][4], gs[2][3], gs[3][2], gs[4][1],
+                              gs[5][0]]
 
             # case 1: 00-55 open 3
             if gs[0][0] == gs[5][5] == 0:
@@ -69,15 +69,90 @@ class BoostedEnemy(Enemy):
             if diagonal_00_55.count('o') == 4 and diagonal_00_55.count(0) == 1:
                 square = (diagonal_00_55.index(0), diagonal_00_55.index(0))
                 return (square, 'x')
-            if diagonal_05_50.count('x') == 4 and diagonal_00_55.count(0) == 1:
-                square = (diagonal_00_55.index(0), 5 - diagonal_00_55.index(0))
+            if diagonal_05_50.count('x') == 4 and diagonal_05_50.count(0) == 1:
+                square = (diagonal_05_50.index(0), 5 - diagonal_05_50.index(0))
                 return (square, 'o')
-            if diagonal_05_50.count('o') == 4 and diagonal_00_55.count(0) == 1:
-                square = (diagonal_00_55.index(0), 5 - diagonal_00_55.index(0))
+            if diagonal_05_50.count('o') == 4 and diagonal_05_50.count(0) == 1:
+                square = (diagonal_05_50.index(0), 5 - diagonal_05_50.index(0))
                 return (square, 'x')
 
-            # check open 3s and 4s
+            # check smaller diagonals
+            diagonal_10_54 = {'10': gs[1][0], '21': gs[2][1], '32': gs[3][2],
+                              '43': gs[4][3], '54': gs[5][4]}
+            dg = diagonal_10_54
+            dg_values = list(dg.values())
+            dg_keys = list(dg.keys())
+            if dg_values.count('x') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'o')
+            if dg_values.count('o') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'x')
 
+            diagonal_01_45 = {'01': gs[0][1], '12': gs[1][2], '23': gs[2][3],
+                              '34': gs[3][4], '45': gs[4][5]}
+            dg = diagonal_01_45
+            dg_values = list(dg.values())
+            dg_keys = list(dg.keys())
+            if dg_values.count('x') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values().index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'o')
+            if dg_values.count('o') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values().index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'x')
+
+            diagonal_04_40 = {'04': gs[0][4], '13': gs[1][3], '22': gs[2][2],
+                              '31': gs[3][1], '40': gs[4][0]}
+            dg = diagonal_04_40
+            dg_values = list(dg.values())
+            dg_keys = list(dg.keys())
+            if dg_values.count('x') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values().index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'o')
+            if dg_values.count('o') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values().index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'x')
+
+            diagonal_15_51 = {'15': gs[1][5], '24': gs[2][4], '33': gs[3][3],
+                              '42': gs[4][2], '51': gs[5][1]}
+            dg = diagonal_15_51
+            dg_values = list(dg.values())
+            dg_keys = list(dg.keys())
+            if dg_values.count('x') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'o')
+            if dg_values.count('o') == 4 and dg_values.count(0) == 1:
+                str_square = dg_keys[dg_values.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                return (square, 'x')
+
+            # check open fours
+            for row in gs:
+                if row.count('x') == 4 and row.count(0) >= 1:
+                    square = None
+                    return (square, 'o')
+                if row.count('o') == 4 and row.count(0) >= 1:
+                    square = None
+                    return (square, 'x')
+
+            for index in range(6):
+                column = [row[index] for row in gs]
+                if column.count('x') == 4 and column.count(0) == 1:
+                    pass
+                if column.count('o') == 4 and column.count(0) == 1:
+                    pass
+
+            # check open threes
+
+
+            # classic pairs
             pairs = {'00': '55', '01': '45', '02': '03', '03': '02',
                      '04': '40', '05': '50', '10': '54', '11': '13',
                      '12': '32', '13': '11', '14': '34', '15': '51',

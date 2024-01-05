@@ -13,7 +13,6 @@ def main():
     pygame.display.set_caption('Porządek i chaos')
     menu = Menu(screen)
     menu.draw()
-
     run = True
     while run:
         clock.tick(60)
