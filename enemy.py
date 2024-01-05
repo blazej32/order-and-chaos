@@ -95,6 +95,14 @@ class HardEnemy(Enemy):
                 token = 'x' if enemy_token == 'o' else 'o'
             self.move_execution((column, row), token, board, game)
         elif self.site == 'order':
+            if all(row.count(0) == 6 for row in gs):
+                token = random.choice(('x', 'o'))
+                row = random.randint(2, 3)
+                column = random.randint(2, 3)
+                square = (column, row)
+                self.move_execution(square, token, board, game)
+                return True
+
             enemy_token = game.last_move[0]
             enemy_square = game.last_move[1]
 
