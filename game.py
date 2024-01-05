@@ -82,9 +82,9 @@ class Game:
 
         return False
 
-    def move_validation(self):
-        x = self.selected_square[0]
-        y = self.selected_square[1]
+    def move_validation(self, square):
+        x = square[0]
+        y = square[1]
         if not self.game_status[x][y] == 0:
             self.selected_square = None
             return False
@@ -114,7 +114,7 @@ class Game:
                     self.selected_square = (row, column)
 
         if self.selected_piece and self.selected_square:
-            if self.move_validation():
+            if self.move_validation(self.selected_square):
                 selected_x = self.selected_square[0]
                 selected_y = self.selected_square[1]
                 self.game_status[selected_x][selected_y] = self.selected_piece
