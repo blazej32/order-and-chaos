@@ -30,16 +30,16 @@ def main():
             game = Game(menu.choosen_site, menu.choosen_level, board, screen)
             map_enemy_site = {'chaos': 'order', 'order': 'chaos'}
             if game.level == 'easy':
-                enemy = EasyEnemy(map_enemy_site[game.site])
+                enemy = EasyEnemy(map_enemy_site[game.site], board, game)
             elif game.level == 'hard':
-                enemy = HardEnemy(map_enemy_site[game.site])
+                enemy = HardEnemy(map_enemy_site[game.site], board, game)
 
         if not menu.before_game:
             if game.player_turn:
                 game.make_move()
             else:
                 pygame.time.wait(500)
-                enemy.make_move(board, game)
+                enemy.make_move()
     pygame.quit()
 
 
