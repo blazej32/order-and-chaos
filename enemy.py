@@ -42,45 +42,41 @@ class BoostedEnemy(Enemy):
         if self.site == 'chaos':
             enemy_square = self.game.last_move[1]
             enemy_token = self.game.last_move[0]
-            # check diagonals (four cases)
+            # check diagonals (3 cases)
+            diagonal_00_55 = [gs[0][0], gs[1][1], gs[2][2], gs[3][3],
+                              gs[4][4], gs[5][5]]
+            diagonal_05_50 = [gs[0][5], gs[1][4], gs[2][3], gs[3][2],
+                              gs[4][1], gs[5][0]]
+
             # case 1: 00-55 open 3
             if gs[0][0] == gs[5][5] == 0:
-                diagonal = [gs[1][1], gs[2][2], gs[3][3], gs[4][4]]
+                diagonal = diagonal_00_55[1:5]
                 if diagonal.count('x') == 3 and diagonal.count(0) == 1:
                     return ((0, 0), 'o')
                 if diagonal.count('o') == 3 and diagonal.count(0) == 1:
                     return ((0, 0), 'x')
             # case 2: 05-50 open 3
             if gs[0][5] == gs[5][0] == 0:
-                diagonal = [gs[1][4], gs[2][3], gs[3][2], gs[4][1]]
+                diagonal = diagonal_05_50[1:5]
                 if diagonal.count('x') == 3 and diagonal.count(0) == 1:
                     return ((0, 5), 'o')
                 if diagonal.count('o') == 3 and diagonal.count(0) == 1:
                     return ((0, 5), 'x')
-            # case 3: 00-55 open 4
-            if gs[1][1] == gs[2][2] == gs[3][3] == gs[4][4]:
-                if gs[1][1] == 'x':
-                    if gs[0][0] == 0:
-                        return ((0, 0), 'o')
-                    else:
-                        return ((5, 5), 'o')
-                elif gs[1][1] == 'o':
-                    if gs[0][0] == 0:
-                        return ((0, 0), 'x')
-                    else:
-                        return ((5, 5), 'o')
-            # case 4: 05-50 open 4
-            if gs[1][4] == gs[2][3] == gs[3][2] == gs[4][1]:
-                if gs[1][4] == 'x':
-                    if gs[0][5] == 0:
-                        return ((0, 5), 'o')
-                    else:
-                        return ((5, 0), 'o')
-                elif gs[1][4] == 'o':
-                    if gs[0][5] == 0:
-                        return ((0, 5), 'x')
-                    else:
-                        return ((5, 0), 'x')
+            # case 3: 00-55 or 05-50 open 4
+            if diagonal_00_55.count('x') == 4 and diagonal_00_55.count(0) == 1:
+                square = (diagonal_00_55.index(0), diagonal_00_55.index(0))
+                return (square, 'o')
+            if diagonal_00_55.count('o') == 4 and diagonal_00_55.count(0) == 1:
+                square = (diagonal_00_55.index(0), diagonal_00_55.index(0))
+                return (square, 'x')
+            if diagonal_05_50.count('x') == 4 and diagonal_00_55.count(0) == 1:
+                square = (diagonal_00_55.index(0), 5 - diagonal_00_55.index(0))
+                return (square, 'o')
+            if diagonal_05_50.count('o') == 4 and diagonal_00_55.count(0) == 1:
+                square = (diagonal_00_55.index(0), 5 - diagonal_00_55.index(0))
+                return (square, 'x')
+
+            # check open 3s and 4s
 
             pairs = {'00': '55', '01': '45', '02': '03', '03': '02',
                      '04': '40', '05': '50', '10': '54', '11': '13',
