@@ -1,6 +1,6 @@
 from menu import Menu
 from board import Board
-from enemy import EasyEnemy, HardEnemy
+from enemy import Enemy, BoostedEnemy
 from game import Game
 import pygame
 pygame.init()
@@ -30,9 +30,9 @@ def main():
             game = Game(menu.choosen_site, menu.choosen_level, board, screen)
             map_enemy_site = {'chaos': 'order', 'order': 'chaos'}
             if game.level == 'easy':
-                enemy = EasyEnemy(map_enemy_site[game.site], board, game)
+                enemy = Enemy(map_enemy_site[game.site], board, game)
             elif game.level == 'hard':
-                enemy = HardEnemy(map_enemy_site[game.site], board, game)
+                enemy = BoostedEnemy(map_enemy_site[game.site], board, game)
 
         if not menu.before_game:
             if game.player_turn:
