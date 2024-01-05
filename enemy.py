@@ -37,6 +37,47 @@ class BoostedEnemy(Enemy):
         else:
             super().make_move()
 
+    def check_open_four(self, lst):
+        if lst[0] == lst[5]:
+            return False
+        # check for x
+        if lst.count('x') == 4 and lst.count(0) >= 1:
+            if lst[0] == 'x':
+                if lst[5] == 0:
+                    return (5, 'x')
+                elif lst[5] == 'o':
+                    return (lst.index(0), 'o')
+            elif lst[5] == 'x':
+                if lst[0] == 0:
+                    return (0, 'x')
+                elif lst[0] == 'o':
+                    return (lst.index(0), 'o')
+
+        # check for o
+        if lst.count('o') == 4 and lst.count(0) >= 1:
+            if lst[0] == 'o':
+                if lst[5] == 0:
+                    return (5, 'o')
+                elif lst[5] == 'x':
+                    return (lst.index(0), 'x')
+            elif lst[5] == 'o':
+                if lst[0] == 0:
+                    return (0, 'o')
+                elif lst[0] == 'x':
+                    return (lst.index(0), 'x')
+        return False
+
+    def check_open_three(self, list):
+        if list[0] == list[5] == 0:
+            centre = list[1:5]
+            # check for x
+            if centre.count('x') == 3 and centre.count(0) == 1:
+                return (centre.index(0) + 1, 'o')
+            # check for o
+            if centre.count('o') == 3 and centre.count(0) == 1:
+                return (centre.index(0) + 1, 'x')
+        return False
+
     def find_move(self):
         gs = self.game.game_status
         if self.site == 'chaos':
@@ -133,24 +174,31 @@ class BoostedEnemy(Enemy):
                 square = (int(str_square[0]), int(str_square[1]))
                 return (square, 'x')
 
-            # check open fours
-            for row in gs:
-                if row.count('x') == 4 and row.count(0) >= 1:
-                    square = None
-                    return (square, 'o')
-                if row.count('o') == 4 and row.count(0) >= 1:
-                    square = None
-                    return (square, 'x')
+            # check open fours and threes
+            for col_index in range(6):
+                column = [row[col_index] for row in gs]
+                check_fours = self.check_open_four(column)
+                if isinstance(check_fours, tuple):
+                    square = (check_fours[0], col_index)
+                    token = check_fours[1]
+                    return (square, token)
+                check_threes = self.check_open_three(column)
+                if isinstance(check_threes, tuple):
+                    square = (check_threes[0], col_index)
+                    token = check_threes[1]
+                    return (square, token)
 
-            for index in range(6):
-                column = [row[index] for row in gs]
-                if column.count('x') == 4 and column.count(0) == 1:
-                    pass
-                if column.count('o') == 4 and column.count(0) == 1:
-                    pass
-
-            # check open threes
-
+            for row_index in range(6):
+                check_fours = self.check_open_four(gs[row_index])
+                if isinstance(check_fours, tuple):
+                    square = (row_index, check_fours[0])
+                    token = check_fours[1]
+                    return (square, token)
+                check_threes = self.check_open_three(gs[row_index])
+                if isinstance(check_threes, tuple):
+                    square = (row_index, check_threes[0])
+                    token = check_threes[1]
+                    return (square, token)
 
             # classic pairs
             pairs = {'00': '55', '01': '45', '02': '03', '03': '02',
