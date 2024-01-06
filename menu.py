@@ -92,11 +92,3 @@ class Menu():
         if self.choosen_level and self.choosen_site and ready_to_play:
             return True
         return False
-
-    def ingame(self, site, level):
-        pygame.draw.rect(self.screen, white, (0, 0, 1200, 700))
-        map_site = {'order': 'porządek', 'chaos': 'chaos'}
-        map_level = {'easy': 'łatwy', 'hard': 'trudny'}
-        scr = self.screen
-        write_text(f'grasz jako {map_site[site]}', 30, (750, 50), gray, scr)
-        write_text(f'poziom: {map_level[level]}', 30, (750, 100), gray, scr)

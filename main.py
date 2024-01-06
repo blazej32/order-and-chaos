@@ -23,9 +23,8 @@ def main():
 
         if menu.starter():
             menu.before_game = False
-            menu.ingame(menu.choosen_site, menu.choosen_level)
-            board = Board(screen)
-            board.draw_board()
+            board = Board(screen, menu.choosen_site, menu.choosen_level)
+            board.draw()
             game = Game(menu.choosen_site, menu.choosen_level, board, screen)
             map_enemy_site = {'chaos': 'order', 'order': 'chaos'}
             if game.level == 'easy':
