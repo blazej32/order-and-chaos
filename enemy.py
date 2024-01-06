@@ -72,20 +72,28 @@ class BoostedEnemy(Enemy):
             centre = list[1:5]
             # check for x
             if centre.count('x') == 3 and centre.count(0) == 1:
-                return (centre.index(0) + 1, 'x')
+                return (centre.index(0) + 1, 'o')
             # check for o
             if centre.count('o') == 3 and centre.count(0) == 1:
-                return (centre.index(0) + 1, 'o')
+                return (centre.index(0) + 1, 'x')
         return False
 
     def check_forced_win(self, lst):
         centre = lst[1:5]
+        # check for open fours
         if lst.count('x') == 4 and 'o' not in centre:
             if lst[0] == lst[5] == 0 or lst[0] != lst[5]:
                 return (lst.index(0), 'x')
         if lst.count('o') == 4 and 'x' not in centre:
             if lst[0] == lst[5] == 0 or lst[0] != lst[5]:
                 return (lst.index(0), 'o')
+
+        # check for open threes
+        if lst[0] == lst[5] == 0:
+            if centre.count('x') == 3 and centre.count(0) == 1:
+                return (centre.index(0) + 1, 'x')
+            if centre.count('o') == 3 and centre.count(0) == 1:
+                return (centre.index(0) + 1, 'o')
         return False
 
     def inner_square_evaluation(self, square):
@@ -97,7 +105,8 @@ class BoostedEnemy(Enemy):
         columns = [[str(y) + str(x) for x in rng_15] for y in rng_15]
         diagonals = [['11', '22', '33', '44'],
                      ['14', '23', '32', '41']]
-        zeros_to_points = {4: 3, 3: 4, 2: 5, 1: 1000}
+        row_col_points = {4: 3, 3: 4, 2: 5, 1: 1000}
+        diagonal_points = {4: 2, 3: 3, 2: 4, 1: 1000}
 
         # 1. check row, column, diagonal for o
         for row in rows:
@@ -106,9 +115,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in row_values and 'o' in row_values:
                     break
                 if 'x' in row_values:
-                    x_points += zeros_to_points[row_values.count(0)]
+                    x_points += row_col_points[row_values.count(0)]
                 else:
-                    o_points += zeros_to_points[row_values.count(0)]
+                    o_points += row_col_points[row_values.count(0)]
 
         for column in columns:
             if square in column:
@@ -116,9 +125,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in column_values and 'o' in column_values:
                     break
                 if 'x' in column_values:
-                    x_points += zeros_to_points[column_values.count(0)]
+                    x_points += row_col_points[column_values.count(0)]
                 else:
-                    o_points += zeros_to_points[column_values.count(0)]
+                    o_points += row_col_points[column_values.count(0)]
 
         for diagonal in diagonals:
             if square in diagonal:
@@ -126,9 +135,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in diagonal_values and 'o' in diagonal_values:
                     break
                 if 'x' in diagonal_values:
-                    x_points += zeros_to_points[diagonal_values.count(0)]
+                    x_points += diagonal_points[diagonal_values.count(0)]
                 else:
-                    o_points += zeros_to_points[diagonal_values.count(0)]
+                    o_points += diagonal_points[diagonal_values.count(0)]
 
         # 3. return the one with more points
         points = o_points if o_points >= x_points else x_points
