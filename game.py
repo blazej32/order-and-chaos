@@ -52,6 +52,11 @@ class Game:
                 return True  # order won
 
         # check if order won diagonally
+        six_in_row_00_55 = (gm[0][0] == gm[1][1] == gm[2][2] == gm[3][3] ==
+                            gm[4][4] == gm[5][5])
+        six_in_row_05_50 = (gm[0][5] == gm[1][4] == gm[2][3] == gm[3][2] ==
+                            gm[4][1] == gm[5][0])
+
         diagonal_win_combinations = [['04', '13', '22', '31', '40'],
                                      ['05', '14', '23', '32', '41'],
                                      ['14', '23', '32', '41', '50'],
@@ -68,8 +73,9 @@ class Game:
                     if gm[int(square[0])][int(square[1])] == 0:
                         zero_occurences += 1
                 if not zero_occurences:
-                    self.endgame('order')
-                    return True  # order won
+                    if not (six_in_row_00_55 or six_in_row_05_50):
+                        self.endgame('order')
+                        return True  # order won
 
         # check if chaos won
         zero_occurences = 0
