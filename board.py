@@ -40,3 +40,12 @@ class Board():
         y = square[1] * 100 + 31
         color = red if piece == 'x' else blue
         write_text(piece, 100, (x, y), color, self.screen)
+
+    def endgame(self, winner):
+        pygame.draw.rect(self.screen, white, (700, 0, 1200, 700))
+        if self.site == winner:
+            winning_msg = 'Zwycięstwo! :D'
+            write_text(winning_msg, 40, (750, 300), gray, self.screen)
+        else:
+            losing_msg = 'Porażka :('
+            write_text(losing_msg, 40, (750, 300), gray, self.screen)

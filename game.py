@@ -1,5 +1,3 @@
-from colors import white, gray
-from menu import write_text
 from board import Board
 import pygame
 import math
@@ -20,35 +18,26 @@ class Game:
         self.screen = screen
         self.last_move = None
 
-    def endgame(self, winner):
-        pygame.draw.rect(self.screen, white, (700, 0, 1200, 700))
-        if self.site == winner:
-            winning_msg = 'Zwycięstwo! :D'
-            write_text(winning_msg, 40, (750, 300), gray, self.screen)
-        else:
-            losing_msg = 'Porażka :('
-            write_text(losing_msg, 40, (750, 300), gray, self.screen)
-
     def check_endgame(self):
         gm = self.game_status
 
         # check if order won horizontally
         for row in gm:
             if row.count('x') == 5 and not (row[0] == row[5] == 'x'):
-                self.endgame('order')
+                self.board.endgame('order')
                 return True  # order won
             if row.count('o') == 5 and not (row[0] == row[5] == 'o'):
-                self.endgame('order')
+                self.board.endgame('order')
                 return True  # order won
 
         # check if order won vertically
         for index in range(6):
             column = [row[index] for row in gm]
             if column.count('x') == 5 and not (column[0] == column[5] == 'x'):
-                self.endgame('order')
+                self.board.endgame('order')
                 return True  # order won
             if column.count('o') == 5 and not (column[0] == column[5] == 'o'):
-                self.endgame('order')
+                self.board.endgame('order')
                 return True  # order won
 
         # check if order won diagonally
