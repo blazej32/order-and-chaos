@@ -90,7 +90,6 @@ class BoostedEnemy(Enemy):
         gs = self.game.game_status
         o_points = 0
         x_points = 0
-        gs = self.game.game_status
         rng_15 = range(1, 5)
         rows = [[str(x) + str(y) for x in rng_15] for y in rng_15]
         columns = [[str(y) + str(x) for x in rng_15] for y in rng_15]
@@ -132,6 +131,14 @@ class BoostedEnemy(Enemy):
         points = o_points if o_points > x_points else x_points
         token = 'o' if o_points > x_points else 'x'
         return (points, square, token)
+
+    def inner_sqares_left(self):
+        gs = self.game.game_status
+        inner = [[gs[x][y] for x in range(1, 5)] for y in range(1, 5)]
+        for row in inner:
+            if 0 in row:
+                return True
+        return False
 
     def find_move(self):
         gs = self.game.game_status
@@ -391,27 +398,30 @@ class BoostedEnemy(Enemy):
             # evaluate center squares in order to find the best one
             # best_move and inner_square_evaluation - (points, square, token)
             # if points are equal, choose square closer to the center
-            best_move = (0, '00', 0)
 
-            for row_index in range(1, 5):
-                for col_index in range(1, 5):
-                    if gs[row_index][col_index] == 0:
-                        square = str(row_index) + str(col_index)
-                        evaluation = self.inner_square_evaluation(square)
-                        if evaluation[0] > best_move[0]:
-                            best_move = evaluation
-                        elif evaluation[0] == best_move[0]:
-                            ev_x_dist = abs(float(evaluation[1][0]) - 2.5)
-                            ev_y_dist = abs(float(evaluation[1][1]) - 2.5)
-                            evaluation_center_dist = ev_x_dist + ev_y_dist
-                            bm_x_dist = abs(float(best_move[1][0]) - 2.5)
-                            bm_y_dist = abs(float(best_move[1][1]) - 2.5)
-                            best_move_center_dist = bm_x_dist + bm_y_dist
-                            if evaluation_center_dist < best_move_center_dist:
+            if self.inner_sqares_left():
+                best_move = (0, '00', 0)
+
+                for row_index in range(1, 5):
+                    for col_index in range(1, 5):
+                        if gs[row_index][col_index] == 0:
+                            square = str(row_index) + str(col_index)
+                            evaluation = self.inner_square_evaluation(square)
+                            if evaluation[0] > best_move[0]:
                                 best_move = evaluation
+                            elif evaluation[0] == best_move[0]:
+                                ev_x_dist = abs(float(evaluation[1][0]) - 2.5)
+                                ev_y_dist = abs(float(evaluation[1][1]) - 2.5)
+                                evaluation_center_dist = ev_x_dist + ev_y_dist
+                                bm_x_dist = abs(float(best_move[1][0]) - 2.5)
+                                bm_y_dist = abs(float(best_move[1][1]) - 2.5)
+                                bm_center_dist = bm_x_dist + bm_y_dist
+                                if evaluation_center_dist < bm_center_dist:
+                                    best_move = evaluation
 
-            square = (int(best_move[1][0]), int(best_move[1][1]))
-            token = best_move[2]
-            return (square, token)
+                square = (int(best_move[1][0]), int(best_move[1][1]))
+                token = best_move[2]
+                return (square, token)
 
-        # if all center squares are full
+        # if all center squares are full, make random move
+        return ((3, 3), 'o')
