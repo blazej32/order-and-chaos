@@ -97,6 +97,7 @@ class BoostedEnemy(Enemy):
         columns = [[str(y) + str(x) for x in rng_15] for y in rng_15]
         diagonals = [['11', '22', '33', '44'],
                      ['14', '23', '32', '41']]
+        zeros_to_points = {4: 3, 3: 4, 2: 5, 1: 1000}
 
         # 1. check row, column, diagonal for o
         for row in rows:
@@ -105,9 +106,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in row_values and 'o' in row_values:
                     break
                 if 'x' in row_values:
-                    x_points += 2 * (4 - row_values.count(0)) - 1
+                    x_points += zeros_to_points[row_values.count(0)]
                 else:
-                    o_points += 2 * (4 - row_values.count(0)) - 1
+                    o_points += zeros_to_points[row_values.count(0)]
 
         for column in columns:
             if square in column:
@@ -115,9 +116,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in column_values and 'o' in column_values:
                     break
                 if 'x' in column_values:
-                    x_points += 2 * (4 - column_values.count(0)) - 1
+                    x_points += zeros_to_points[column_values.count(0)]
                 else:
-                    o_points += 2 * (4 - column_values.count(0)) - 1
+                    o_points += zeros_to_points[column_values.count(0)]
 
         for diagonal in diagonals:
             if square in diagonal:
@@ -125,13 +126,13 @@ class BoostedEnemy(Enemy):
                 if 'x' in diagonal_values and 'o' in diagonal_values:
                     break
                 if 'x' in diagonal_values:
-                    x_points += 2 * (4 - diagonal_values.count(0)) - 1
+                    x_points += zeros_to_points[diagonal_values.count(0)]
                 else:
-                    o_points += 2 * (4 - diagonal_values.count(0)) - 1
+                    o_points += zeros_to_points[diagonal_values.count(0)]
 
         # 3. return the one with more points
-        points = o_points if o_points > x_points else x_points
-        token = 'o' if o_points > x_points else 'x'
+        points = o_points if o_points >= x_points else x_points
+        token = 'o' if o_points >= x_points else 'x'
         return (points, square, token)
 
     def inner_sqares_left(self):
