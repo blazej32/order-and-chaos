@@ -86,7 +86,7 @@ class BoostedEnemy(Enemy):
             return (list.index(0), 'o')
         return False
 
-    def square_evaluation(self, square):
+    def inner_square_evaluation(self, square):
         gs = self.game.game_status
         o_points = 0
         x_points = 0
@@ -325,7 +325,53 @@ class BoostedEnemy(Enemy):
                 return (square, token)
 
             # check for forced win for small diagonals
-            pass
+            dg = list(diagonal_10_54.values())
+            if dg.count('x') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_10_54.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'x'
+                return (square, token)
+            if dg.count('o') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_10_54.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'o'
+                return (square, token)
+
+            dg = list(diagonal_01_45.values())
+            if dg.count('x') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_01_45.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'x'
+                return (square, token)
+            if dg.count('o') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_01_45.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'o'
+                return (square, token)
+
+            dg = list(diagonal_04_40.values())
+            if dg.count('x') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_04_40.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'x'
+                return (square, token)
+            if dg.count('o') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_04_40.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'o'
+                return (square, token)
+
+            dg = list(diagonal_15_51.values())
+            if dg.count('x') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_15_51.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'x'
+                return (square, token)
+            if dg.count('o') == 4 and dg.count(0) == 1:
+                str_square = list(diagonal_15_51.keys())[dg.index(0)]
+                square = (int(str_square[0]), int(str_square[1]))
+                token = 'o'
+                return (square, token)
 
             # check if enemy played edge/corner
             corner_edge_pairs = {'00': '55', '01': '51', '02': '52',
@@ -343,7 +389,7 @@ class BoostedEnemy(Enemy):
 
             # try to do 4 in a row in central 4x4
             # evaluate center squares in order to find the best one
-            # best_move and square_evaluation format - (points, square, token)
+            # best_move and inner_square_evaluation - (points, square, token)
             # if points are equal, choose square closer to the center
             best_move = (0, '00', 0)
 
@@ -351,7 +397,7 @@ class BoostedEnemy(Enemy):
                 for col_index in range(1, 5):
                     if gs[row_index][col_index] == 0:
                         square = str(row_index) + str(col_index)
-                        evaluation = self.square_evaluation(square)
+                        evaluation = self.inner_square_evaluation(square)
                         if evaluation[0] > best_move[0]:
                             best_move = evaluation
                         elif evaluation[0] == best_move[0]:
@@ -368,3 +414,4 @@ class BoostedEnemy(Enemy):
             token = best_move[2]
             return (square, token)
 
+        # if all center squares are full
