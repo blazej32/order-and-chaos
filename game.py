@@ -53,9 +53,9 @@ class Game:
 
         # check if order won diagonally
         six_in_row_00_55 = (gm[0][0] == gm[1][1] == gm[2][2] == gm[3][3] ==
-                            gm[4][4] == gm[5][5])
+                            gm[4][4] == gm[5][5] != 0)
         six_in_row_05_50 = (gm[0][5] == gm[1][4] == gm[2][3] == gm[3][2] ==
-                            gm[4][1] == gm[5][0])
+                            gm[4][1] == gm[5][0] != 0)
 
         diagonal_win_combinations = [['04', '13', '22', '31', '40'],
                                      ['05', '14', '23', '32', '41'],

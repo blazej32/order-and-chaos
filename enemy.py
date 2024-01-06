@@ -72,18 +72,20 @@ class BoostedEnemy(Enemy):
             centre = list[1:5]
             # check for x
             if centre.count('x') == 3 and centre.count(0) == 1:
-                return (centre.index(0) + 1, 'o')
+                return (centre.index(0) + 1, 'x')
             # check for o
             if centre.count('o') == 3 and centre.count(0) == 1:
-                return (centre.index(0) + 1, 'x')
+                return (centre.index(0) + 1, 'o')
         return False
 
-    def check_forced_win(self, list):
-        centre = list[1:5]
-        if list.count('x') == 4 and list[0] != list[5] and 'o' not in centre:
-            return (list.index(0), 'x')
-        if list.count('o') == 4 and list[0] != list[5] and 'x' not in centre:
-            return (list.index(0), 'o')
+    def check_forced_win(self, lst):
+        centre = lst[1:5]
+        if lst.count('x') == 4 and 'o' not in centre:
+            if lst[0] == lst[5] == 0 or lst[0] != lst[5]:
+                return (lst.index(0), 'x')
+        if lst.count('o') == 4 and 'x' not in centre:
+            if lst[0] == lst[5] == 0 or lst[0] != lst[5]:
+                return (lst.index(0), 'o')
         return False
 
     def inner_square_evaluation(self, square):
@@ -103,9 +105,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in row_values and 'o' in row_values:
                     break
                 if 'x' in row_values:
-                    x_points += 4 - row_values.count(0)
+                    x_points += 2 * (4 - row_values.count(0)) - 1
                 else:
-                    o_points += 4 - row_values.count(0)
+                    o_points += 2 * (4 - row_values.count(0)) - 1
 
         for column in columns:
             if square in column:
@@ -113,9 +115,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in column_values and 'o' in column_values:
                     break
                 if 'x' in column_values:
-                    x_points += 4 - column_values.count(0)
+                    x_points += 2 * (4 - column_values.count(0)) - 1
                 else:
-                    o_points += 4 - column_values.count(0)
+                    o_points += 2 * (4 - column_values.count(0)) - 1
 
         for diagonal in diagonals:
             if square in diagonal:
@@ -123,9 +125,9 @@ class BoostedEnemy(Enemy):
                 if 'x' in diagonal_values and 'o' in diagonal_values:
                     break
                 if 'x' in diagonal_values:
-                    x_points += 4 - diagonal_values.count(0)
+                    x_points += 2 * (4 - diagonal_values.count(0)) - 1
                 else:
-                    o_points += 4 - diagonal_values.count(0)
+                    o_points += 2 * (4 - diagonal_values.count(0)) - 1
 
         # 3. return the one with more points
         points = o_points if o_points > x_points else x_points
